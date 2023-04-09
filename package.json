@@ -1,0 +1,30 @@
+{
+  "name": "fitness-tracker",
+  "version": "1.0.0",
+  "description": "Fitness Tracker is a webapplication\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D \u001b[C\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b application that helpstness project and achieve their fitness goals.Users can create a account, log in and enter their \u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C workout information.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Revan-Bairav/Fitness-Tracker.git"
+  },
+  "keywords": [
+    "Fitness",
+    "Tracker",
+    "Mysql",
+    "Nodejs"
+  ],
+  "author": "S G Revan Bairav revanbairav@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Revan-Bairav/Fitness-Tracker/issues"
+  },
+  "homepage": "https://github.com/Revan-Bairav/Fitness-Tracker#readme",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
