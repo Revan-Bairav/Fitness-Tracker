@@ -2,10 +2,16 @@
 <html>
 <head>
 	<title>User Registration</title>
+	<link rel="stylesheet" type="text/css" href="C:\Users\revan\fitness-tracker\public\style.css">
 </head>
 <body>
+	<div class="registration-text">
 	<h1>User Registration</h1>
-	<form>
+    </div>
+	<form action="/register" method="POST">
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" required>
+
 		<label for="email">Email:</label>
 		<input type="email" id="email" name="email" required>
 
@@ -15,9 +21,11 @@
 		<label for="confirmPassword">Confirm Password:</label>
 		<input type="password" id="confirmPassword" name="confirmPassword" required>
 
-		<button type="submit">Register</button>
+		<input type="submit" value="Register">
 	</form>
 
-	<script src="/js/register.js"></script>
+	<p>Already have an account? <a href="/login">Log in here</a>.</p>
+	<p>By clicking "Register" you agree to our <a href="/terms">terms and conditions</a>.</p>
+	<script src="C:\Users\revan\fitness-tracker\public\register.js"></script>
 </body>
 </html>

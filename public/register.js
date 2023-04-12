@@ -1,60 +1,46 @@
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirmPassword');
-const form = document.querySelector('form');
+const form = document.getElementById('registration-form');
 
 form.addEventListener('submit', (event) => {
-	event.preventDefault();
-	checkInputs();
+  event.preventDefault(); // Prevent default form submission behavior
+
+  // Get form values
+  const email = document.getElementById('email-input').value;
+  const password = document.getElementById('password-input').value;
+  const confirmPassword = document.getElementById('confirm-password-input').value;
+
+  // Validate form data
+  if (!email || !password || !confirmPassword) {
+    // Display error message if any fields are empty
+    document.getElementById('error-message').textContent = 'Please fill in all fields.';
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    // Display error message if passwords don't match
+    document.getElementById('error-message').textContent = 'Passwords do not match.';
+    return;
+  }
+
+  // Send form data to server using fetch or XMLHttpRequest
+  fetch('/register', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      // Redirect to login page on successful registration
+      window.location.href = '/login';
+    } else {
+      // Display error message if registration failed
+      document.getElementById('error-message').textContent = 'Registration failed. Please try again.';
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    // Display error message if an error occurred during registration
+    document.getElementById('error-message').textContent = 'An error occurred during registration.';
+  });
 });
-
-function checkInputs() {
-	// Get the values from the input fields
-	const emailValue = email.value.trim();
-	const passwordValue = password.value.trim();
-	const confirmPasswordValue = confirmPassword.value.trim();
-
-	if (emailValue === '') {
-		setErrorFor(email, 'Email is required');
-	} else if (!isEmail(emailValue)) {
-		setErrorFor(email, 'Email is not valid');
-	} else {
-		setSuccessFor(email);
-	}
-
-	if (passwordValue === '') {
-		setErrorFor(password, 'Password is required');
-	} else if (passwordValue.length < 8) {
-		setErrorFor(password, 'Password must be at least 8 characters');
-	} else {
-		setSuccessFor(password);
-	}
-
-	if (confirmPasswordValue === '') {
-		setErrorFor(confirmPassword, 'Confirm Password is required');
-	} else if (passwordValue !== confirmPasswordValue) {
-		setErrorFor(confirmPassword, 'Passwords do not match');
-	} else {
-		setSuccessFor(confirmPassword);
-	}
-}
-
-function setErrorFor(input, message) {
-	const formControl = input.parentElement;
-	const errorMessage = formControl.querySelector('small');
-
-	// Add error message and error class to input field
-	errorMessage.innerText = message;
-	formControl.className = 'form-control error';
-}
-
-function setSuccessFor(input) {
-	const formControl = input.parentElement;
-	formControl.className = 'form-control success';
-}
-
-function isEmail(email) {
-	// Regular expression to check if email is valid
-	const re = /\S+@\S+\.\S+/;
-	return re.test(email);
-}
