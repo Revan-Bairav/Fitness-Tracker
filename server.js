@@ -1,64 +1,38 @@
 const express = require('express');
 const app = express();
-const PORT = 4000;
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Set up middleware to parse request body
+app.use(bodyParser.urlencoded({ extended: true }));
 
-let workouts = [
-  { id: 1, name: 'Chest and Triceps', description: 'Bench press and tricep dips' },
-  { id: 2, name: 'Back and Biceps', description: 'Pull ups and bicep curls' },
-  { id: 3, name: 'Leg day', description: 'Squats and lunges' },
-];
+// Define a route to handle the user registration form submission
+app.post('/register', async (req, res) => {
+  // Retrieve the email and password from the request body
+  const { email, password, confirm_password } = req.body;
 
-app.get('/', (req, res) => {
-  res.send('Welcome to Fitness Tracker!');
-});
-
-app.get('/workouts', (req, res) => {
-  res.send(workouts);
-});
-
-app.get('/workouts/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const workout = workouts.find(w => w.id === id);
-  if (!workout) {
-    res.status(404).send('Workout not found');
-  } else {
-    res.send(workout);
+  // Check if the email is already in use
+  const existingUser = await User.findOne({ where: { email } });
+  if (existingUser) {
+    return res.status(400).send('Email address already in use');
   }
-});
 
-app.post('/workouts', (req, res) => {
-  const workout = req.body;
-  workout.id = workouts.length + 1;
-  workouts.push(workout);
-  res.send(workout);
-});
-
-app.put('/workouts/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const workoutIndex = workouts.findIndex(w => w.id === id);
-  if (workoutIndex === -1) {
-    res.status(404).send('Workout not found');
-  } else {
-    workouts[workoutIndex] = req.body;
-    workouts[workoutIndex].id = id;
-    res.send(workouts[workoutIndex]);
+  // Check if the password and confirm password fields match
+  if (password !== confirm_password) {
+    return res.status(400).send('Passwords do not match');
   }
+
+  // Hash the password using bcrypt before storing in the database
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Create a new user with the email and hashed password
+  const newUser = await User.create({ email, password: hashedPassword });
+
+  // Redirect the user to the login page after successful registration
+  res.redirect('/login');
 });
 
-app.delete('/workouts/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const workoutIndex = workouts.findIndex(w => w.id === id);
-  if (workoutIndex === -1) {
-    res.status(404).send('Workout not found');
-  } else {
-    workouts.splice(workoutIndex, 1);
-    res.send(`Workout with id ${id} deleted`);
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+// Start the server
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
 });
