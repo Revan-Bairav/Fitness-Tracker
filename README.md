@@ -53,4 +53,4 @@ This project is maintained by [Revan Bairav](https://github.com/Revan-Bairav) an
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[Apache License 2.0](https://github.com/Revan-Bairav/Fitness-Tracker/blob/main/LICENSE)
