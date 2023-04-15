@@ -1,2 +1,2 @@
 # Fitness-Tracker
-A web application
+This is a web application designed to help users track their fitness goals and progress. With a user-friendly interface and a variety of features, including workout tracking, nutrition tracking, goal setting, and progress visualization, FitnessTracker makes it easy for users to stay motivated and on track with their fitness journey. Built using modern web technology such as Node.js, this application is scalable, efficient, and customizable. Whether you're a fitness enthusiast, a personal trainer, or a gym owner, FitnessTracker has something for everyone.
