@@ -3,9 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
-const { sequelize } = require('sequelize');
-
+const  database= require('./database');
 
 // Set up middleware to parse request body
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,8 +49,16 @@ app.post('/register', async (req, res) => {
   res.redirect('/login');
 });
 
+
+//Get all
+
+app.get('/getAll',(request , response) =>{
+  console.log('test');
+})
+
+
 // Start the server
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(4000, () => {
+  console.log('Server listening on port 4000');
 });
 

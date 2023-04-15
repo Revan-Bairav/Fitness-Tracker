@@ -1,16 +1,18 @@
-const { Sequelize } = require('sequelize');
-//want to change the parameters of sequelize
-const sequelize = new Sequelize('database_name', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'mysql'
+const mysql = require('mysql');
+const dotenv =require('dotenv');
+dotenv.config();
+
+const connection=mysql.createConnection({
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  port: process.env.DB_PORT
 });
 
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection to database has been established successfully.');
-  })
-  .catch((error) => {
-    console.error('Unable to connect to the database:', error);
-  });
-
-module.exports = sequelize;
+connection.connect((err) => {
+  if(err){
+    console.log(err.message);
+  }
+  console.log('db' + connection.state);
+})
