@@ -2,9 +2,25 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const path = require('path');
+
+const { sequelize } = require('sequelize');
+
 
 // Set up middleware to parse request body
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Set the view engine to use EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Serve static files from the public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Define a route to render the user registration form
+app.get('/register', (req, res) => {
+  res.render('register');
+});
 
 // Define a route to handle the user registration form submission
 app.post('/register', async (req, res) => {
@@ -36,3 +52,4 @@ app.post('/register', async (req, res) => {
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
+
