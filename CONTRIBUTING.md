@@ -24,6 +24,8 @@ We expect all contributors to follow the [Code of Conduct](https://github.com/Re
 
 ## License
 
-By contributing to this project, you agree to license your contributions under the same license as the project.
+By contributing to this project, you agree to license your contributions under the same license as the project. Please see the [LICENSE](https://github.com/Revan-Bairav/Fitness-Tracker/blob/main/LICENSE) file for details.
+
+
 
 Thank you for contributing to Fitness Tracker!
