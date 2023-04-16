@@ -48,6 +48,8 @@ const User = sequelize.define('User', {
   tableName: 'users'
 });
 
+console.log(User);
+
 module.exports = { sequelize, User };
 
 

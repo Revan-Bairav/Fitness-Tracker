@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt');
 // Registration function
 function register(req, res, next) {
     const { username, email, password } = req.body;
+     // Check if password and confirmPassword fields match
+     if (password !== confirmPassword) {
+      return res.render('register', { error: 'Passwords do not match' });
+    }
     const newUser = new User({ username, email, password });
     newUser.save(function(err) {
       if (err) {

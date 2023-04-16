@@ -6,7 +6,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const  User= require('./database');
+const { sequelize, User } = require('./database');
+console.log(User);
 const authenticationController = require('./controllers/authenticationController');
 
 
@@ -34,7 +35,8 @@ app.post('/register', async (req, res) => {
   const { email, password, confirm_password } = req.body;
 
   // Check if the email is already in use
-  const existingUser = await User.findOne({ where: { email } });
+  const existingUser = await User.findOne({ attributes: ['id', 'username', 'email', 'password'],
+  where: { email } });
   if (existingUser) {
     return res.status(400).send('Email address already in use');
   }
@@ -56,7 +58,7 @@ app.post('/register', async (req, res) => {
 
 // Define a route to render the login page
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { error: null });
 });
 
 
