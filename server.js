@@ -6,7 +6,9 @@ const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const  database= require('./database');
+const  User= require('./database');
+const authenticationController = require('./controllers/authenticationController');
+
 
 // Set up middleware to parse request body
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/register', (req, res) => {
   res.render('register');
 });
+
+// Define  a route to handle login requests
+app.post('/login', authenticationController.login);
 
 // Define a route to handle the user registration form submission
 app.post('/register', async (req, res) => {
@@ -47,6 +52,11 @@ app.post('/register', async (req, res) => {
 
   // Redirect the user to the login page after successful registration
   res.redirect('/login');
+});
+
+// Define a route to render the login page
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 
