@@ -4,22 +4,31 @@ const bcrypt = require('bcrypt');
 
 // Registration function
 function register(req, res, next) {
-    const { username, email, password } = req.body;
-     // Check if password and confirmPassword fields match
-     if (password !== confirmPassword) {
-      return res.render('register', { error: 'Passwords do not match' });
+  const { username, email, password, confirmPassword } = req.body;
+  // Check if password and confirmPassword fields match
+  if (password !== confirmPassword) {
+    return res.render('register', { error: 'Passwords do not match' });
+  }
+
+  // Check if username field is provided
+  if (!username) {
+    return res.render('register', { error: 'Username is required' });
+  }
+
+  const newUser = new User({ username, email, password });
+  newUser.save(function (err) {
+    if (err) {
+      return next(err);
     }
-    const newUser = new User({ username, email, password });
-    newUser.save(function(err) {
+    req.login(newUser, function (err) {
       if (err) {
         return next(err);
       }
-      req.login(newUser, function(err) {
-        if (err) { return next(err); }
-        return res.redirect('/dashboard');
-      });
+      return res.redirect('/dashboard');
     });
-  }
+  });
+}
+
 // Login function
 function login(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
